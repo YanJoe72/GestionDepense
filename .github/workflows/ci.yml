@@ -1,0 +1,67 @@
+name: CI - Test sur Linux, Windows et macOS
+
+on:
+  push:
+    branches:
+      - main  # Vous pouvez ajuster selon la branche que vous souhaitez tester
+  pull_request:
+    branches:
+      - main  # Vous pouvez ajuster selon la branche que vous souhaitez tester
+
+jobs:
+  # Job pour tester sous Linux
+  test-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vérifier le code
+        uses: actions/checkout@v2
+
+      - name: Installer Java
+        run: sudo apt-get install openjdk-11-jdk -y
+
+      - name: Vérifier Java
+        run: java -version
+
+      - name: Configurer Java 11 pour Gradle
+        run: sudo update-alternatives --config java
+
+      - name: Construire et tester
+        run: ./gradlew clean build jlink jpackage
+
+  # Job pour tester sous Windows
+  test-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Vérifier le code
+        uses: actions/checkout@v2
+
+      - name: Installer Java
+        run: choco install openjdk11 -y
+
+      - name: Vérifier Java
+        run: java -version
+
+      - name: Configurer Java 11 pour Gradle
+        run: setx JAVA_HOME "C:\Program Files\OpenJDK\jdk-11.0.10" && setx PATH "%PATH%;C:\Program Files\OpenJDK\jdk-11.0.10\bin"
+
+      - name: Construire et tester
+        run: ./gradlew clean build jlink jpackage
+
+  # Job pour tester sous macOS
+  test-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Vérifier le code
+        uses: actions/checkout@v2
+
+      - name: Installer Java
+        run: brew install openjdk@11
+
+      - name: Vérifier Java
+        run: java -version
+
+      - name: Configurer Java 11 pour Gradle
+        run: export JAVA_HOME="$(/usr/libexec/java_home -v 11)" && export PATH="$JAVA_HOME/bin:$PATH"
+
+      - name: Construire et tester
+        run: ./gradlew clean build jlink jpackage
