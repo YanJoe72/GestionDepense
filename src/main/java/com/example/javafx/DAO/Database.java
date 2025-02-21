@@ -110,7 +110,6 @@ public class Database {
         // Renvoie le chemin complet vers la base de données
         return appFolder + File.separator + DB_NAME;
     }
-     */
 
     private static String getDatabasePath() {
         String appData;
@@ -139,5 +138,46 @@ public class Database {
         // Renvoie le chemin complet vers la base de données
         return appFolder + File.separator + DB_NAME;
     }
+     */
+
+    private static String getDatabasePath() {
+        String appData;
+
+        // Vérifie si le système d'exploitation est Windows
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            // Sur Windows, on utilise %APPDATA% (AppData\Roaming)
+            appData = System.getenv("APPDATA");
+            if (appData == null) {
+                appData = System.getProperty("user.home") + "\\AppData\\Roaming";
+            }
+        }
+        // Vérifie si le système d'exploitation est macOS
+        else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            // Sur macOS, on utilise ~/Library/Application Support
+            appData = System.getProperty("user.home") + "/Library/Application Support";
+        }
+        // Si c'est Linux
+        else if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
+            // Sur Linux, on peut utiliser ~/.local/share pour les données de l'application
+            appData = System.getProperty("user.home") + "/.local/share";
+        }
+        else {
+            // Si un autre OS est détecté, on met un chemin par défaut
+            appData = System.getProperty("user.home");
+        }
+
+        // Chemin du dossier de l'application
+        String appFolder = appData + File.separator + "GestionDepence";
+
+        // Crée le dossier s'il n'existe pas déjà
+        File folder = new File(appFolder);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        // Renvoie le chemin complet vers la base de données
+        return appFolder + File.separator + DB_NAME;
+    }
+
 
 }

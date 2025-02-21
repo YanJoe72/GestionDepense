@@ -62,10 +62,15 @@ jlink {
       installerOptions += ['--mac-package-identifier', 'com.example.javafx', '--mac-package-name', 'Gestion Dépenses', "--app-version", "1.0.0", "--type", "dmg", '--mac-app-store']
       installerType = project.findProperty('installerType')
     }
-    if(org.gradle.internal.os.OperatingSystem.current().windows){
+    else if(org.gradle.internal.os.OperatingSystem.current().windows){
       imageOptions +=['--icon','src/main/resources/com/example/javafx/images/icon.ico']
       installerOptions += ['--win-per-user-install','--win-dir-chooser','--win-menu','--win-shortcut']
       installerType = 'exe'
+    }
+    else if (org.gradle.internal.os.OperatingSystem.current().linux) {
+      imageOptions += ['--icon', 'src/main/resources/com/example/javafx/images/icon.png']
+      installerOptions += ['--linux-package-type', 'deb']
+      installerType = 'deb'
     }
   }
 }
