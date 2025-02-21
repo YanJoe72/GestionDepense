@@ -78,9 +78,3 @@ jlink {
 jlinkZip {
   group = 'distribution'
 }
-
-java {
-  toolchain {
-    languageVersion = JavaLanguageVersion.of(11) // Forcer l'utilisation de Java 11 pour Gradle
-  }
-}
