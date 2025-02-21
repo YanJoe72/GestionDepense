@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.javafx.controllers.ExpenseController"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <VBox stylesheets="@styles/expense-view.css" styleClass="layout">
+            <HBox alignment="CENTER">
+                <Label text="Tableau récapitulatif des dépenses" styleClass="title" />
+            </HBox>
+            <VBox>
+                <TableView fx:id="tableView" >
+                    <columns >
+                        <TableColumn editable="false" text="Periode" >
+                            <cellValueFactory >
+                                <PropertyValueFactory property="periode" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Total">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="total"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Logement">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="logement"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Nourriture">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="nourriture"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Sorties">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="sorties"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Voiture/Transport">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="voiture"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Voyage">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="voyage"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Impôts">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="impots"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Autres">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="autres"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </VBox>
+            <HBox alignment="CENTER">
+                <Button text="Ajouter" styleClass="btn" onAction="#showFormDialog"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
+
+
