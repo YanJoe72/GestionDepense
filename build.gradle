@@ -75,7 +75,7 @@ jlink {
       }
       else if (org.gradle.internal.os.OperatingSystem.current().linux) {
         imageOptions += ['--icon', 'src/main/resources/com/example/javafx/assets/icon.png']
-        installerOptions += ['--linux-package-type', 'deb']
+        installerOptions += ['--linux-package-name', 'gestion-depenses', '--linux-shortcut']
         installerType = 'deb'
       }
     }
