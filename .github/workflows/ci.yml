@@ -22,7 +22,7 @@ jobs:
       - name: Vérifier Java
         run: java -version
 
-      - name: Configurer Java 11 pour Gradle
+      - name: Configurer Java 21 pour Gradle
         run: sudo update-alternatives --config java
 
       - name: Construire et tester
@@ -41,7 +41,7 @@ jobs:
       - name: Vérifier Java
         run: java -version
 
-      - name: Configurer Java 11 pour Gradle
+      - name: Configurer Java 21 pour Gradle
         run: setx JAVA_HOME "C:\Program Files\OpenJDK\jdk-11.0.10" && setx PATH "%PATH%;C:\Program Files\OpenJDK\jdk-11.0.10\bin"
 
       - name: Construire et tester
@@ -60,7 +60,7 @@ jobs:
       - name: Vérifier Java
         run: java -version
 
-      - name: Configurer Java 11 pour Gradle
+      - name: Configurer Java 21 pour Gradle
         run: export JAVA_HOME="$(/usr/libexec/java_home -v 11)" && export PATH="$JAVA_HOME/bin:$PATH"
 
       - name: Construire et tester
