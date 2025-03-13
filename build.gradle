@@ -15,6 +15,8 @@ repositories {
 
 ext {
   junitVersion = '5.10.2'
+  // Ajout d'une propriété pour détecter si nous sommes dans GitHub Actions
+  isGithubActions = System.getenv('GITHUB_ACTIONS') != null
 }
 
 sourceCompatibility = '21'
@@ -47,7 +49,8 @@ dependencies {
 }
 
 test {
-useJUnitPlatform()}
+  useJUnitPlatform()
+}
 
 jlink {
   imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
@@ -56,25 +59,37 @@ jlink {
     name = 'GestionDepenses'
   }
   addExtraDependencies('slf4j')
-  jpackage {
-    if (org.gradle.internal.os.OperatingSystem.current().macOsX) {
-      imageOptions += ['--icon', 'src/main/resources/com/example/javafx/assets/icon.icns']
-      installerOptions += ['--mac-package-identifier', 'com.example.javafx', '--mac-package-name', 'Gestion Dépenses', "--app-version", "1.0.0", "--type", "dmg", '--mac-app-store']
-      installerType = project.findProperty('installerType')
-    }
-    else if(org.gradle.internal.os.OperatingSystem.current().windows){
-      imageOptions +=['--icon','src/main/resources/com/example/javafx/assets/icon.ico']
-      installerOptions += ['--win-per-user-install','--win-dir-chooser','--win-menu','--win-shortcut']
-      installerType = 'exe'
-    }
-    else if (org.gradle.internal.os.OperatingSystem.current().linux) {
-      imageOptions += ['--icon', 'src/main/resources/com/example/javafx/assets/icon.png']
-      installerOptions += ['--linux-package-type', 'deb']
-      installerType = 'deb'
+
+  // Conditionnellement configurer jpackage
+  if (!(isGithubActions && org.gradle.internal.os.OperatingSystem.current().windows)) {
+    jpackage {
+      if (org.gradle.internal.os.OperatingSystem.current().macOsX) {
+        imageOptions += ['--icon', 'src/main/resources/com/example/javafx/assets/icon.icns']
+        installerOptions += ['--mac-package-identifier', 'com.example.javafx', '--mac-package-name', 'Gestion Depenses', "--app-version", "1.0.0", "--type", "dmg"]
+        installerType = project.findProperty('installerType')
+      }
+      else if(org.gradle.internal.os.OperatingSystem.current().windows){
+        imageOptions +=['--icon','src/main/resources/com/example/javafx/assets/icon.ico']
+        installerOptions += ['--win-per-user-install','--win-dir-chooser','--win-menu','--win-shortcut']
+        installerType = 'exe'
+      }
+      else if (org.gradle.internal.os.OperatingSystem.current().linux) {
+        imageOptions += ['--icon', 'src/main/resources/com/example/javafx/assets/icon.png']
+        installerOptions += ['--linux-package-type', 'deb']
+        installerType = 'deb'
+      }
     }
   }
 }
 
 jlinkZip {
   group = 'distribution'
+}
+
+// Ajout d'une tâche conditionnelle pour GitHub Actions sur Windows
+if (isGithubActions && org.gradle.internal.os.OperatingSystem.current().windows) {
+  task githubActionsWindowsBuild(dependsOn: ['build', 'jlink']) {
+    group = 'build'
+    description = 'Task to run on GitHub Actions for Windows without jpackage'
+  }
 }
