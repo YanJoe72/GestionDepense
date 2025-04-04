@@ -1,0 +1,70 @@
+VBox {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d679c;
+    -fx-padding: 10px 0;
+}
+
+.choice-box {
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+}
+
+#lineChart, #barChart {
+    -fx-pref-width: 400px;
+    -fx-pref-height: 300px;
+}
+
+.chart-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #373ea1;
+}
+
+.chart-legend {
+    -fx-background-color: white;
+    -fx-border-color: #d3d3d3;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.chart-pie-label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.axis {
+    -fx-tick-label-fill: #373ea1;
+    -fx-font-size: 12px;
+}
+
+.axis-label {
+    -fx-text-fill: #373ea1;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #373ea1;
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #373ea1, white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #373ea1;
+}
+
+.default-color0.chart-bar:hover {
+    -fx-bar-fill: #2c3180;
+}

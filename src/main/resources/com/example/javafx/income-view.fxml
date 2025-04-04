@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.javafx.controllers.IncomeController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <top>
+        <fx:include source="header.fxml" />
+    </top>
+
+    <center>
+        <VBox stylesheets="@styles/expense-view.css" styleClass="layout">
+            <HBox alignment="CENTER">
+                <Label text="Tableau récapitulatif des revenus" styleClass="title" />
+            </HBox>
+            <VBox>
+                <TableView fx:id="tableView" >
+                    <columns >
+                        <TableColumn editable="false" text="Période" >
+                            <cellValueFactory >
+                                <PropertyValueFactory property="period" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Total">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="total"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Salaire">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="salary"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Aides">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="grants"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Auto-entreprise">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="selfBusiness"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Revenus passifs">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="passiveIncome"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn editable="false" text="Autres">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="other"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </VBox>
+            <HBox alignment="CENTER">
+                <Button text="Ajouter" styleClass="btn" onAction="#showFormDialog"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
+
+

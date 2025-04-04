@@ -1,0 +1,54 @@
+VBox {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-border-radius: 15;
+    -fx-spacing: 15;
+}
+
+.chart-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #373ea1;
+}
+
+.axis {
+    -fx-tick-label-fill: #373ea1;
+    -fx-font-size: 14px;
+}
+
+.axis-label {
+    -fx-text-fill: #373ea1;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.chart-pie-label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.chart-legend {
+    -fx-background-color: white;
+    -fx-border-color: #d3d3d3;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: #373ea1;
+}
+
+.default-color0.chart-bar:hover {
+    -fx-bar-fill: #2c3180;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #373ea1;
+    -fx-stroke-width: 2px;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #373ea1, white;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}

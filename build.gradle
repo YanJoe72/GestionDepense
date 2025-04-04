@@ -15,12 +15,14 @@ repositories {
 
 ext {
   junitVersion = '5.10.2'
-  // Ajout d'une propriété pour détecter si nous sommes dans GitHub Actions
   isGithubActions = System.getenv('GITHUB_ACTIONS') != null
 }
 
-sourceCompatibility = '21'
-targetCompatibility = '21'
+java {
+  sourceCompatibility = '21'
+  targetCompatibility = '21'
+}
+
 
 tasks.withType(JavaCompile) {
   options.encoding = 'UTF-8'
@@ -43,7 +45,6 @@ dependencies {
   implementation 'org.slf4j:slf4j-api:2.0.11'
   implementation("com.fasterxml.jackson.core:jackson-core:2.16.1")
   implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
-
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
@@ -60,7 +61,6 @@ jlink {
   }
   addExtraDependencies('slf4j')
 
-  // Conditionnellement configurer jpackage
   if (!(isGithubActions && org.gradle.internal.os.OperatingSystem.current().windows)) {
     jpackage {
       if (org.gradle.internal.os.OperatingSystem.current().macOsX) {
@@ -86,7 +86,6 @@ jlinkZip {
   group = 'distribution'
 }
 
-// Ajout d'une tâche conditionnelle pour GitHub Actions sur Windows
 if (isGithubActions && org.gradle.internal.os.OperatingSystem.current().windows) {
   task githubActionsWindowsBuild(dependsOn: ['build', 'jlink']) {
     group = 'build'

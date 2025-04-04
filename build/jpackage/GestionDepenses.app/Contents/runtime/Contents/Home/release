@@ -1,0 +1,2 @@
+JAVA_VERSION="21.0.6"
+MODULES="java.base java.logging java.transaction.xa java.xml java.sql java.datatransfer java.prefs java.desktop javafx.base jdk.unsupported javafx.graphics javafx.controls java.scripting javafx.fxml org.apache.logging.log4j org.slf4j java.security.sasl java.naming java.sql.rowset org.xerial.sqlitejdbc com.example.merged.module reload4j com.example.javafx"

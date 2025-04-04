@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.javafx.controllers.IncomeFormDialogController"
+            prefHeight="400.0" prefWidth="600.0">
+    <center>
+        <VBox stylesheets="@styles/income-form-view.css" styleClass="layout">
+            <HBox alignment="CENTER">
+                <Label text="Formulaire :" styleClass="title" />
+            </HBox>
+            <VBox>
+                <Label text="Période :" styleClass="title"/>
+                <TextField fx:id="period"/>
+                <Label text="Salaire :" styleClass="title"/>
+                <TextField fx:id="salary"/>
+                <Label text="Aides :" styleClass="title"/>
+                <TextField fx:id="grants"/>
+                <Label text="Auto-entreprise :" styleClass="title"/>
+                <TextField fx:id="selfBusiness"/>
+                <Label text="Revenus passifs :" styleClass="title"/>
+                <TextField fx:id="passiveIncome"/>
+                <Label text="Autres :" styleClass="title"/>
+                <TextField fx:id="other"/>
+            </VBox>
+            <HBox alignment="CENTER" spacing="10">
+                <Button fx:id="submitButton" text="Soumettre" onAction="#handleSubmit"/>
+                <Button text="Fermer" onAction="#handleCancel"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

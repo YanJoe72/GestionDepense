@@ -1,10 +1,12 @@
 module com.example.javafx {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
     requires org.xerial.sqlitejdbc;
     requires org.slf4j;
-
+    requires javafx.base;
+    requires java.sql;
+    requires org.apache.logging.log4j;
+    requires reload4j;
 
 
     opens com.example.javafx to javafx.fxml;

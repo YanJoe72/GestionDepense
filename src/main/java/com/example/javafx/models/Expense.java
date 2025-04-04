@@ -26,6 +26,18 @@ public class Expense {
         this.autres = autres;
     }
 
+    public Expense(String date, double housing, double food, double goingOut, double transportation, double travel, double tax, double other) {
+        this.periode = date;
+        this.total = housing;
+        this.logement = food;
+        this.nourriture = goingOut;
+        this.sorties = transportation;
+        this.voiture = travel;
+        this.voyage = tax;
+        this.impots = other;
+        this.autres = 0;
+    }
+
     public String getPeriode() {
         return periode;
     }

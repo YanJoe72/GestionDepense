@@ -1,0 +1,56 @@
+.layout {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-border-radius: 15;
+    -fx-border-color: #d3d3d3;
+    -fx-border-width: 2px;
+}
+
+.title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #373ea1;
+    -fx-font-size: 20px;
+}
+
+Label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #373ea1;
+}
+
+VBox {
+    -fx-spacing: 15;
+}
+
+HBox {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+TextField {
+    -fx-pref-height: 35px;
+    -fx-border-color: #d3d3d3;
+    -fx-border-radius: 5px;
+    -fx-padding: 5;
+}
+
+Button {
+    -fx-background-color: #373ea1;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 5px;
+    -fx-border-width: 0;
+    -fx-font-size: 14px;
+}
+
+Button:hover {
+    -fx-background-color: #2c3180;
+}
+
+Button[text="Fermer"] {
+    -fx-background-color: #d9534f;
+}
+
+Button[text="Fermer"]:hover {
+    -fx-background-color: #c9302c;
+}

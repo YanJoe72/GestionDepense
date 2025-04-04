@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.control.ChoiceBox?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.controllers.TableBoardController">
+    <top>
+        <fx:include source="./header.fxml" />
+    </top>
+    <center>
+        <VBox stylesheets="@styles/table-board-view.css">
+            <HBox alignment="CENTER">
+                <Label text="Tableau de bord" styleClass="title" />
+            </HBox>
+            <HBox alignment="CENTER">
+                <ChoiceBox fx:id="choiceBox" />
+            </HBox>
+            <PieChart fx:id="pieChart" title="Répartition des Dépenses" prefWidth="200" prefHeight="300"/>
+            <HBox alignment="CENTER">
+                <LineChart fx:id="lineChart" title="Evolution des dépenses" prefWidth="400" prefHeight="500">
+                    <xAxis>
+                        <CategoryAxis label="Date" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Montant" />
+                    </yAxis>
+                </LineChart>
+
+                <BarChart fx:id="barChart" title="Dépenses vs Revenues" barGap="2" categoryGap="1" prefWidth="500" prefHeight="300">
+                    <xAxis>
+                        <CategoryAxis label="Date"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Montant"/>
+                    </yAxis>
+                </BarChart>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

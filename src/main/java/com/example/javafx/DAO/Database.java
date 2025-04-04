@@ -4,10 +4,7 @@ import org.slf4j.LoggerFactory;
 import org.sqlite.JDBC;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,24 +12,21 @@ import java.util.logging.Logger;
 public class Database {
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(Database.class);
 
-    /**
-     * Location of database on macOS in ~/Library/Application Support/GestionDepense
-     */
     private static final String DB_NAME = "database.db";
-    private static final String LOCATION = getDatabasePath(); // Dynamically build the path
+    private static final String LOCATION = getDatabasePath();
 
     public static boolean isOK() {
         if (!checkDrivers()) {
             System.out.println("Drivers not available");
             return false;
-        }  //driver errors
+        }
 
         if (!checkConnection()) {
             System.out.println("Connection not available");
             return false;
-        } //can't connect to db
+        }
         System.out.println(createTableIfNotExists());
-        return createTableIfNotExists(); //tables didn't exist
+        return createTableIfNotExists();
     }
 
     private static boolean checkDrivers() {
@@ -56,30 +50,42 @@ public class Database {
     }
 
     private static boolean createTableIfNotExists() {
-        String createTables =
+        String createExpenseTable =
                 """
-                         CREATE TABLE IF NOT EXISTS expense(
-                                  date TEXT NOT NULL,
-                                  housing REAL NOT NULL,
-                                  food REAL NOT NULL,
-                                  goingOut REAL NOT NULL,
-                                  transportation REAL NOT NULL,
-                                  travel REAL NOT NULL,
-                                  tax REAL NOT NULL,
-                                  other REAL NOT NULL
-                              );
-                        """;
-        System.out.println("Exécution de la requête : " + createTables);
+                CREATE TABLE IF NOT EXISTS expense (
+                    periode TEXT NOT NULL,
+                    housing REAL NOT NULL,
+                    food REAL NOT NULL,
+                    goingOut REAL NOT NULL,
+                    transportation REAL NOT NULL,
+                    travel REAL NOT NULL,
+                    tax REAL NOT NULL,
+                    other REAL NOT NULL
+                );
+                """;
+        String CreateIncomeTable = """
+                CREATE TABLE IF NOT EXISTS income (
+                    period TEXT NOT NULL,
+                    salary REAL NOT NULL,
+                    grants REAL NOT NULL,
+                    selfBusiness REAL NOT NULL,
+                    passiveIncome REAL NOT NULL,
+                    other REAL NOT NULL
+                );
+                """;
 
-        try (Connection connection = Database.connect()) {
-            PreparedStatement statement = connection.prepareStatement(createTables);
-            statement.executeUpdate();
+        try (Connection connection = Database.connect();
+             Statement statement = connection.createStatement()) {
+            statement.executeUpdate(createExpenseTable);
+
+            statement.executeUpdate(CreateIncomeTable);
+
             return true;
         } catch (SQLException exception) {
-            log.error("Could not create tables in database", exception);
             return false;
         }
     }
+
 
     protected static Connection connect() {
         String dbPrefix = "jdbc:sqlite:";
@@ -93,89 +99,34 @@ public class Database {
         return connection;
     }
 
-    /**
-     * Construit le chemin complet de la base de données dans ~/Library/Application Support.
-     */
-    /*
-    private static String getDatabasePath() {
-        String libraryAppSupport = System.getProperty("user.home") + "/Library/Application Support";
 
-        String appFolder = libraryAppSupport + File.separator + "GestionDepense";
-
-        File folder = new File(appFolder);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        // Renvoie le chemin complet vers la base de données
-        return appFolder + File.separator + DB_NAME;
-    }
 
     private static String getDatabasePath() {
         String appData;
 
-        // Vérifie si le système d'exploitation est Windows
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            // Sur Windows, on utilise %APPDATA% (AppData\Roaming)
-            appData = System.getenv("APPDATA");
-            if (appData == null) {
-                appData = System.getProperty("user.home") + "\\AppData\\Roaming";
-            }
-        } else {
-            // Sur macOS, on utilise ~/Library/Application Support
-            appData = System.getProperty("user.home") + "/Library/Application Support";
-        }
-
-        // Chemin du dossier de l'application
-        String appFolder = appData + File.separator + "GestionDepence";
-
-        // Crée le dossier s'il n'existe pas déjà
-        File folder = new File(appFolder);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-
-        // Renvoie le chemin complet vers la base de données
-        return appFolder + File.separator + DB_NAME;
-    }
-     */
-
-    private static String getDatabasePath() {
-        String appData;
-
-        // Vérifie si le système d'exploitation est Windows
-        if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            // Sur Windows, on utilise %APPDATA% (AppData\Roaming)
             appData = System.getenv("APPDATA");
             if (appData == null) {
                 appData = System.getProperty("user.home") + "\\AppData\\Roaming";
             }
         }
-        // Vérifie si le système d'exploitation est macOS
         else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            // Sur macOS, on utilise ~/Library/Application Support
             appData = System.getProperty("user.home") + "/Library/Application Support";
         }
-        // Si c'est Linux
         else if (System.getProperty("os.name").toLowerCase().contains("nix") || System.getProperty("os.name").toLowerCase().contains("nux")) {
-            // Sur Linux, on peut utiliser ~/.local/share pour les données de l'application
             appData = System.getProperty("user.home") + "/.local/share";
         }
         else {
-            // Si un autre OS est détecté, on met un chemin par défaut
             appData = System.getProperty("user.home");
         }
 
-        // Chemin du dossier de l'application
         String appFolder = appData + File.separator + "GestionDepence";
 
-        // Crée le dossier s'il n'existe pas déjà
         File folder = new File(appFolder);
         if (!folder.exists()) {
             folder.mkdirs();
         }
 
-        // Renvoie le chemin complet vers la base de données
         return appFolder + File.separator + DB_NAME;
     }
 

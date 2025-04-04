@@ -13,8 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-import static com.example.javafx.DAO.ExpenseDAO.selectExpense;
-
 public class ExpenseController {
 
     @FXML
@@ -23,13 +21,18 @@ public class ExpenseController {
 
     @FXML
     public void initialize() {
-        expensesList.addAll(ExpenseDAO.selectExpense());
-        tableView.setItems(expensesList);
+        if (tableView != null) {
+            System.out.println("TableView initialisée avec succès");
+            expensesList.addAll(ExpenseDAO.selectExpense());
+            tableView.setItems(expensesList);
+        } else {
+            System.out.println("Erreur : TableView non initialisée.");
+        }
     }
 
     public void showFormDialog() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/javafx/form-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/javafx/expense-form-view.fxml"));
             Parent root = loader.load();
 
             Stage dialogStage = new Stage();
@@ -37,7 +40,7 @@ public class ExpenseController {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.setScene(new Scene(root));
 
-            FormDialogController controller = loader.getController();
+            ExpenseFormDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setExpensesList(expensesList);
 
